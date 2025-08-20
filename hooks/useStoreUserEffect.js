@@ -3,6 +3,19 @@ import { useConvexAuth } from "convex/react";
 import { useEffect, useState } from "react";
 import { useMutation } from "convex/react";
 import { api } from "../convex/_generated/api";
+/**
+ * Ensures an authenticated Clerk user is persisted to the Convex backend and exposes loading/auth status.
+ *
+ * When the hook observes the client is authenticated it invokes the server-side `api.users.store` mutation
+ * (the server reads the current auth context) and stores the returned user id in local state. The hook
+ * returns two flags:
+ * - `isLoading`: true while Convex auth is loading or while an authenticated user is being stored.
+ * - `isAuthenticated`: true only after a server-stored user id is available.
+ *
+ * Note: errors from the store mutation are not caught inside the hook; on unmount or dependency changes
+ * the stored id is reset to null.
+ * @return {{isLoading: boolean, isAuthenticated: boolean}}
+ */
 export default function useStoreUserEffect() {
     const { isAuthenticated, isLoading } = useConvexAuth();
     const { user } = useUser();
