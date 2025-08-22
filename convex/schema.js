@@ -19,7 +19,7 @@ export default defineSchema({
 
     }).index("by_token", ["tokenIdentifier"]),
 
-    prjects: defineTable({
+    projects: defineTable({
         // Basic project info
         title: v.string(),
         userId: v.id("users"), // Owner reference
