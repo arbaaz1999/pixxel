@@ -204,6 +204,22 @@ const CanvasEditor = ({ project }) => {
         return () => window.removeEventListener("resize", handleResize);
     }, [canvasEditor, project]);
 
+    useEffect(() => {
+        if (!canvasEditor) return;
+
+        switch (activeTool) {
+            case "crop":
+                // crop tool shows crosshair cursor for precision selection
+                canvasEditor.defaultCursor = "crosshair";
+                canvasEditor.hoverCursor = "crosshair";
+                break;
+            default:
+                // Default tools show standard cursor
+                canvasEditor.defaultCursor = "default";
+                canvasEditor.hoverCursor = "move";
+        }
+    }, [canvasEditor, activeTool])
+
 
     return (
         <div ref={containerRef} className='relative flex items-center justify-center bg-secondary w-full h-full overflow-hidden'>
