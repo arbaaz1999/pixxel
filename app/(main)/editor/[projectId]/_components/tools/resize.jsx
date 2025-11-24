@@ -6,7 +6,8 @@ import { useCanvas } from '@/context/Context';
 import { api } from '@/convex/_generated/api';
 import { useConvexMutation } from '@/hooks/useConvexQuery';
 import { Expand, Lock, Monitor, Unlock } from 'lucide-react';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { toast } from 'sonner';
 
 // Common aspect ratios
 const ASPECT_RATIOS = [
@@ -30,6 +31,15 @@ const ResizeControls = ({ project }) => {
         data,
         isLoading,
     } = useConvexMutation(api.projects.updateProject);
+
+    useEffect(() => {
+        if (!isLoading && data) {
+            setTimeout(() => {
+                // workaround for initial resize issues
+                window.dispatchEvent(new Event("resize"));
+            }, 500);
+        }
+    }, [data, isLoading])
 
     const handleWidthChange = (value) => {
         const width = parseInt(value) || 0;
@@ -132,7 +142,7 @@ const ResizeControls = ({ project }) => {
             });
         } catch (error) {
             console.error("Error resizing canvas:", error);
-            alert("Failed to resize canvas. Please try again.");
+            toast.error("Failed to resize canvas, Please Try Again")
         } finally {
             setProcessingMessage(null);
         }
