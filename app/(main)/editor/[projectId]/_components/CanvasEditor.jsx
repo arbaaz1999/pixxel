@@ -220,6 +220,26 @@ const CanvasEditor = ({ project }) => {
         }
     }, [canvasEditor, activeTool])
 
+    useEffect(() => {
+        if (!canvasEditor || !onToolChange) return;
+
+        const handleSelection = (e) => {
+            const selectedObject = e.selected?.[0]
+            if (selectedObject && selectedObject.type === "i-text") {
+                onToolChange("text");
+            }
+        }
+
+        canvasEditor.on("selection:created", handleSelection);
+        canvasEditor.on("selection:updated", handleSelection);
+
+
+        return () => {
+            canvasEditor.off("selection:created", handleSelection);
+            canvasEditor.off("selection:updated", handleSelection);
+        }
+    }, [canvasEditor, onToolChange])
+
 
     return (
         <div ref={containerRef} className='relative flex items-center justify-center bg-secondary w-full h-full overflow-hidden'>
