@@ -4,6 +4,10 @@ import React from 'react'
 import CropContent from './tools/crop';
 import ResizeControls from './tools/resize';
 import AdjustControls from './tools/adjust';
+import AIBackground from './tools/ai-background';
+import TextControl from './tools/text';
+import AiExtendControls from './tools/ai-extend';
+import AIEditor from './tools/ai-editor';
 
 const TOOL_CONFIGS = {
     resize: {
@@ -55,7 +59,7 @@ const EditorSidebar = ({ project }) => {
     const Icon = toolConfig.icon;
 
     return (
-        <div className="min-w-96 border-r flex flex-col">
+        <div className="min-w-96 max-w-96 border-r flex flex-col">
             {/* Sidebar Header */}
             <div className="p-4 border-b">
                 <div className="flex items-center gap-3">
@@ -84,6 +88,14 @@ function renderToolContent(activeTool, project) {
             return <ResizeControls project={project} />
         case "adjust":
             return <AdjustControls />
+        case "background":
+            return <AIBackground project={project} />
+        case "text":
+            return <TextControl />
+        case "ai_extender":
+            return <AiExtendControls project={project} />
+        case "ai_edit":
+            return <AIEditor project={project} />
 
 
         default:
