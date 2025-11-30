@@ -14,7 +14,7 @@ const inter = Inter({
 
 export const metadata = {
   title: "Pixxel",
-  description: "AI Image Editor",
+  description: "Pixxel is a subscription-based SaaS AI Image Editor built with Next.js (App Router). It provides a modern, browser-based canvas editor with AI-powered transformations and traditional image-editing features so users can crop, resize, add text, adjust colors, replace or remove backgrounds, extend canvases, perform AI edits and enhancements, and export final assets.",
 };
 
 export default function RootLayout({ children }) {
